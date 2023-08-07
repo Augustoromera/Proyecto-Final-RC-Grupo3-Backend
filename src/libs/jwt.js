@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken'
 import {TOKEN_SECRET} from "../config.js"
 
 
@@ -5,8 +6,7 @@ import {TOKEN_SECRET} from "../config.js"
   return new Promise((resolve, reject) =>{
     jwt.sign(
         payload,
-        TOKEN_SECRET,
-        'secret123',      
+        TOKEN_SECRET,       
       {
         expiresIn :"1d",
       },
