@@ -1,7 +1,12 @@
+import {TOKEN_SECRET} from "../config.js"
+
+
 function createAccessToken (payload){
-jwt.sign({
-    id: userSaved._id,
-  }, 'secret123', 
+jwt.sign(
+    
+    payload,
+    TOKEN_SECRET,
+    'secret123', 
   
   {
     expiresIn :"1d",
