@@ -18,7 +18,11 @@ const {email, password, username} = req.body;
      })
     
      const userSaved =  await newUser.save();
-       res.json(userSaved);
+       res.json({
+        id: userSaved._id,
+        username: userSaved.username,
+        email: userSaved.email,
+       });
     
  } catch (error) {
     console.log(error);
