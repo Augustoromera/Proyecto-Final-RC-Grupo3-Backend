@@ -1,21 +1,25 @@
 //importar librerias
 const express = require('express');
+const { dbConnection } = require('./database/config');
+const app= express();
 require('dotenv').config();
+const cors = require('cors');
 
-//crear server
-const app = express();
+//leactura y parceo del body
+app.use(express.json());
 
-const PORT = process.env.PORT || 8080;
+//llamar cors
+app.use(cors());
 
-//rutas endpoints
-app.get('/', (req, res) => {
-    res.json({
-        success: true,
-        response: "Server ON",
-    });
-});
+//conexion a base de datos
+dbConnection();
+
+//directorio publico
+app.use(express.static('public'));
+
+app.use('/auth', require ('./routes/auth'));
 
 //inicializar server
-app.listen(PORT, ()=>{
-    console.log(`server initialized in port : ${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`servidor corriendo en el puerto ${process.env.PORT}`);
 });
