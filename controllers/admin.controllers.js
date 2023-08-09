@@ -18,6 +18,48 @@ const cargarUsuarios = async (req, res) => {
     }
 
 }
+const inactivarUsuario = async (req, res) => {
+    try {
+        const usuariosInactivar = await usuarioModel.findById(req.body._id);
+        if (!usuariosInactivar) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe ningún usuario con ese id',
+            });
+        }
+        const usuarioInactivo = req.body;
+        usuarioInactivo.estado = 'inactive';
+        await usuarioModel.findByIdAndUpdate(req.body._id, usuarioInactivo);
+        res.status(200).json({
+            msg: 'Usuario inhabilitado correctamente',
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: 'Por favor contacta al administrador',
+        });
+    }
+};
+const crearUsuario = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.json({
+            errors: errors.mapped(),
+        });
+    }
+    try {
+        const usuario = new usuarioModel(req.body);
+        await usuario.save();
+        res.status(201).json({
+            msg: 'Usuario creado correctamente',
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Por favor contacta al administrador',
+        });
+    }
+};
+
 const cargarMenu = async (req, res) => {
     try {
         const menus = await menuModel.find();
@@ -56,7 +98,6 @@ const crearMenu = async (req, res) => {
 const editarMenu = async (req, res) => {
     try {
         const menuEditar = await menuModel.findById(req.body._id);
-        console.log(req.body)
         if (!menuEditar) {
             return res.status(404).json({
                 ok: false,
@@ -74,6 +115,7 @@ const editarMenu = async (req, res) => {
         });
     }
 };
+
 
 const eliminarMenu = async (req, res) => {
     try {
@@ -101,5 +143,7 @@ module.exports = {
     crearMenu,
     cargarMenu,
     editarMenu,
-    eliminarMenu
+    eliminarMenu,
+    crearUsuario,
+    inactivarUsuario
 }

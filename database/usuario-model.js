@@ -8,6 +8,10 @@ const usuarioSchema = Schema({
         type: String,
         required: true,
     },
+    estado: {
+        type: String,
+        default:'active',
+    },
     password: {
         type: String,
         required: true,

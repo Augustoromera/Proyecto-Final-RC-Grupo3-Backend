@@ -5,15 +5,27 @@ const {
     cargarMenu,
     crearMenu,
     editarMenu,
-    eliminarMenu
+    eliminarMenu,
+    crearUsuario,
+    inactivarUsuario
 } = require('../controllers/admin.controllers');
 
 const routerAdmin = express.Router();
+//control usuario
+routerAdmin.get('/listarUsuarios', cargarUsuarios);
+routerAdmin.post('/nuevoUsuario', [
+    check('name', 'El nombre es obligatorio').not().isEmpty(),
+    check('email', 'El estado es obligatorio').not().isEmpty(),
+    check('estado', 'El precio es obligatorio').not().isEmpty(),
+    check('password', 'El detalle es obligatorio').not().isEmpty()
+], crearUsuario);
+routerAdmin.put('/inactivarUsuario', inactivarUsuario);
 
-routerAdmin.get('/usuarios', cargarUsuarios);
 
-routerAdmin.get('/menus', cargarMenu);
-routerAdmin.post('/new', [
+
+//control menu
+routerAdmin.get('/listarMenu', cargarMenu);
+routerAdmin.post('/nuevoMenu', [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
     check('estado', 'El estado es obligatorio').not().isEmpty(),
     check('precio', 'El precio es obligatorio').not().isEmpty(),
@@ -21,8 +33,8 @@ routerAdmin.post('/new', [
     check('categoria', 'La categoría es obligatoria').not().isEmpty()
 ], crearMenu);
 
-routerAdmin.put('/editar', editarMenu);
-routerAdmin.delete('/eliminar/:id', eliminarMenu);
+routerAdmin.put('/editarMenu', editarMenu);
+routerAdmin.delete('/eliminarMenu/:id', eliminarMenu);
 
 module.exports = routerAdmin;
 
