@@ -9,7 +9,8 @@ const {
     crearUsuario,
     inactivarUsuario,
     editarUsuario,
-    listarPedido
+    listarPedido,
+    completarPedido
 } = require('../controllers/admin.controllers');
 
 const routerAdmin = express.Router();
@@ -35,6 +36,6 @@ routerAdmin.delete('/eliminarMenu/:id', eliminarMenu);
 
 //control pedidos
 routerAdmin.get('/listarPedido', listarPedido);
-
+routerAdmin.put('/completarPedido', completarPedido);
 module.exports = routerAdmin;
 

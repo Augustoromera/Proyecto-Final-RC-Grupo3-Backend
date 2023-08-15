@@ -153,6 +153,26 @@ const editarMenu = async (req, res) => {
         });
     }
 };
+const completarPedido = async (req, res) => {
+    try {
+        const pedidoEditar = await pedidoModel.findById(req.body._id);
+        if (!pedidoEditar) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe ningún pedido con ese id',
+            });
+        }
+        await pedidoModel.findByIdAndUpdate(req.body._id, req.body);
+        res.status(200).json({
+            msg: 'Pedido editado correctamente',
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            msg: 'Por favor contacta al administrador',
+        });
+    }
+};
 
 
 const eliminarMenu = async (req, res) => {
@@ -185,5 +205,6 @@ module.exports = {
     crearUsuario,
     inactivarUsuario,
     editarUsuario,
-    listarPedido
+    listarPedido,
+    completarPedido
 }
