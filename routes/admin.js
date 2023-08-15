@@ -7,19 +7,16 @@ const {
     editarMenu,
     eliminarMenu,
     crearUsuario,
-    inactivarUsuario
+    inactivarUsuario,
+    editarUsuario
 } = require('../controllers/admin.controllers');
 
 const routerAdmin = express.Router();
 //control usuario
 routerAdmin.get('/listarUsuarios', cargarUsuarios);
-routerAdmin.post('/nuevoUsuario', [
-    check('name', 'El nombre es obligatorio').not().isEmpty(),
-    check('email', 'El estado es obligatorio').not().isEmpty(),
-    check('estado', 'El precio es obligatorio').not().isEmpty(),
-    check('password', 'El detalle es obligatorio').not().isEmpty()
-], crearUsuario);
+routerAdmin.post('/nuevoUsuario', crearUsuario);
 routerAdmin.put('/inactivarUsuario', inactivarUsuario);
+routerAdmin.put('/editarUsuario', editarUsuario);
 
 
 

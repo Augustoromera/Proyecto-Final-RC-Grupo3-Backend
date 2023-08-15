@@ -5,6 +5,10 @@ const menuSchema = Schema({
         type: String,
         required: true,
     },
+    imagen: {
+        type: String,
+        required: true,
+    },
     estado: {
         type: String,
         required: true,

@@ -18,7 +18,7 @@ const usuarioSchema = Schema({
     },
     rol: {
         type: String,
-        default: 'usuario',
+        default: 'user',
     },
 });
 module.exports = model('Usuario', usuarioSchema);
