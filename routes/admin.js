@@ -10,7 +10,8 @@ const {
     inactivarUsuario,
     editarUsuario,
     listarPedido,
-    completarPedido
+    completarPedido,
+    eliminarUsuario
 } = require('../controllers/admin.controllers');
 
 const routerAdmin = express.Router();
@@ -19,7 +20,7 @@ routerAdmin.get('/listarUsuarios', cargarUsuarios);
 routerAdmin.post('/nuevoUsuario', crearUsuario);
 routerAdmin.put('/inactivarUsuario', inactivarUsuario);
 routerAdmin.put('/editarUsuario', editarUsuario);
-
+routerAdmin.delete('/eliminarUsuario/:id', eliminarUsuario);
 
 
 //control menu

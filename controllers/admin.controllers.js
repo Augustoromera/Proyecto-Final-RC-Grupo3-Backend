@@ -194,6 +194,25 @@ const eliminarMenu = async (req, res) => {
         });
     }
 };
+const eliminarUsuario = async (req, res) => {
+    try {
+        const usuarioEliminar = await usuarioModel.findById(req.params.id);
+        if (!usuarioEliminar) {
+            return res.status(404).json({
+                ok: false,
+                msg: 'No existe ningún menú con ese id',
+            });
+        }
+        await usuarioModel.findByIdAndDelete(req.params.id);
+        res.status(200).json({
+            msg: 'Usuario eliminado correctamente',
+        });
+    } catch (error) {
+        res.status(500).json({
+            msg: 'Por favor contacta al administrador',
+        });
+    }
+};
 
 
 module.exports = {
@@ -206,5 +225,6 @@ module.exports = {
     inactivarUsuario,
     editarUsuario,
     listarPedido,
-    completarPedido
+    completarPedido,
+    eliminarUsuario
 }
