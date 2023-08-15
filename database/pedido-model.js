@@ -2,7 +2,8 @@ const { Schema, model } = require('mongoose');
 
 const pedidoSchema = Schema({
     usuario: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'Usuario', 
         required: true,
     },
     fecha: {
@@ -10,12 +11,20 @@ const pedidoSchema = Schema({
         default: Date.now,
         required: true,
     },
-    menu: {
-        type: String,
+    menus:[ {
+        type: Schema.Types.ObjectId,
+        ref: 'Menu',
         required: true,
-    },
+    }],
     estado: {
         type: String,
+        enum: ['pendiente', 'completado'], 
+        default: 'pendiente',
+        required: true,
+    },
+    importeTotal: {
+        type: Number,
+        default: 0,
         required: true,
     },
 });

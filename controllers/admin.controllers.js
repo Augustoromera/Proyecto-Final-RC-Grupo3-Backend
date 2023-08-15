@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator");
 const menuModel = require("../database/menu-model");
 const usuarioModel = require("../database/usuario-model");
+const pedidoModel = require("../database/pedido-model");
 const bcrypt = require('bcrypt');
 const cargarUsuarios = async (req, res) => {
     try {
@@ -97,6 +98,20 @@ const cargarMenu = async (req, res) => {
         });
     }
 };
+const listarPedido = async (req, res) => {
+    try {
+        const pedidos = await pedidoModel.find();
+        res.status(200).json({
+            ok: true,
+            pedidos,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Por favor contacta al administrador',
+        });
+    }
+};
 
 const crearMenu = async (req, res) => {
     const errors = validationResult(req);
@@ -169,5 +184,6 @@ module.exports = {
     eliminarMenu,
     crearUsuario,
     inactivarUsuario,
-    editarUsuario
+    editarUsuario,
+    listarPedido
 }
