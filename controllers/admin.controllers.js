@@ -65,7 +65,7 @@ const editarUsuario = async (req, res) => {
 const crearUsuario = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.json({
+        return res.status(400).json({
             errors: errors.mapped(),
         });
     }
@@ -85,6 +85,7 @@ const crearUsuario = async (req, res) => {
 };
 
 const cargarMenu = async (req, res) => {
+    
     try {
         const menus = await menuModel.find();
         res.status(200).json({
@@ -116,7 +117,7 @@ const listarPedido = async (req, res) => {
 const crearMenu = async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.json({
+        res.status(400).json({
             errors: errors.mapped(),
         });
     }

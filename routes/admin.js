@@ -17,7 +17,13 @@ const {
 const routerAdmin = express.Router();
 //control usuario
 routerAdmin.get('/listarUsuarios', cargarUsuarios);
-routerAdmin.post('/nuevoUsuario', crearUsuario);
+routerAdmin.post('/nuevoUsuario', [
+    check('name', 'El nombre es obligatorio, o debe ser alfabetico').not().isEmpty().isAlpha(),
+    check('estado', 'El estado es obligatorio').not().isEmpty(),
+    check('password', 'El password es obligatorio y debe tener al menos 8 caracteres').notEmpty().isLength({ min: 8 }),
+    check('rol', 'El rol es obligatoria').not().isEmpty(),
+    check('email', 'El correo electrónico no es válido').isEmail(),
+], crearUsuario);
 routerAdmin.put('/inactivarUsuario', inactivarUsuario);
 routerAdmin.put('/editarUsuario', editarUsuario);
 routerAdmin.delete('/eliminarUsuario/:id', eliminarUsuario);
