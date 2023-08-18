@@ -3,5 +3,6 @@ import { connectDB } from './db.js';
 
 
 connectDB();
-app.listen(8081);
-console.log('server en puerto', 8081);
+app.listen(8080);
+console.log('server en puerto', 8080);
+
