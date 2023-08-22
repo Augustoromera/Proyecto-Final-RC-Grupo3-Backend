@@ -18,6 +18,7 @@ dbConnection();
 app.use(express.static('public'));
 
 app.use('/admin', require('./routes/admin'));
+app.use('/pedido', require('./routes/pedidos'));
 //inicializar server
 app.listen(process.env.PORT, () => {
     console.log(`servidor corriendo en el puerto ${process.env.PORT}`);
