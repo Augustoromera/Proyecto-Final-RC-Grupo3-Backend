@@ -14,4 +14,9 @@ router.get('/verify', verifyToken);
 router.get('/profile',authRequired, profile);
 
 
+//agregar pagina admin
+router.get('/admin-page', authRequired, isAdmin, adminPageController);
+
+
+
 export default router;
