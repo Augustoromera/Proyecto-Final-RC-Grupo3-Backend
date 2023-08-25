@@ -1,8 +1,10 @@
 import {Router} from 'express';
 import { login, register, logout, profile, verifyToken} from '../controllers/auth.controller.js';
-import { authRequired } from '../middlewares/validateToken.js';
+import { authRequired, isAdmin } from '../middlewares/validateToken.js';
 import { validateSchema } from '../middlewares/validator.middleware.js';
 import { registerSchema, loginSchema } from '../schemas/auth.schema.js';
+import { adminPageController } from '../controllers/admin.controller.js';
+import { createAdminUsers } from '../controllers/auth.controller.js';
  
 
 const router = Router();
@@ -14,8 +16,9 @@ router.get('/verify', verifyToken);
 router.get('/profile',authRequired, profile);
 
 
-//agregar pagina admin
+//agrego pagina admin
 router.get('/admin-page', authRequired, isAdmin, adminPageController);
+router.post('/create-admin-users', createAdminUsers);
 
 
 

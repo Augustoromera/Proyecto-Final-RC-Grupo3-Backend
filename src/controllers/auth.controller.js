@@ -4,38 +4,39 @@ import {createAccessToken} from '../libs/jwt.js';
 import  jwt  from 'jsonwebtoken';
 import { TOKEN_SECRET } from '../config.js';
 
-export const register = async (req, res) =>{
-
-const {email, password, username} = req.body;
-
- try {
-
-     const userFound = await User.findOne({email})
-      if(userFound) return res.status(400).json({message:["El email ya esta en uso"]});
-         
-    const passwordHash = await bcrypt.hash(password, 10)
 
 
-    const newUser = new User({
-        username,
-        email,
-        password: passwordHash,
-     })
-    
-     const userSaved =  await newUser.save();
-     const token = await createAccessToken({id: userSaved._id})
-     res.cookie('token', token);
-      res.json({
-         id: userSaved._id,
-         username: userSaved.username,
-         email: userSaved.email,
+export const register = async (req, res) => {
+    const { email, password, username } = req.body;
+
+    try {
+        const userFound = await User.findOne({ email });
+        if (userFound) return res.status(400).json({ message: ["El email ya está en uso"] });
+
+        const passwordHash = await bcrypt.hash(password, 10);
+
+        // Lista de correos electrónicos que tendrán el rol de administrador
+        const adminEmails = ['paulo101@gmail.com', 'augusto101@gmail.com', 'nico101@gmail.com', 'santiago101@gmail.com'];
+        
+        const newUser = new User({
+            username,
+            email,
+            password: passwordHash,
+            role: adminEmails.includes(email) ? 'admin' : 'user', // Toma valor admin si el email está en la lista de administradores
         });
-    
- } catch (error) {
-    res.status(500).json({message:error.message});
- }
 
+        const userSaved = await newUser.save();
+        const token = await createAccessToken({ id: userSaved._id });
+        res.cookie('token', token);
+        res.json({
+            id: userSaved._id,
+            username: userSaved.username,
+            email: userSaved.email,
+        });
 
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 
@@ -115,3 +116,31 @@ export const verifyToken = async(req, res) =>{
         })
       });
 }
+
+
+export const createAdminUsers = async (req, res) => {
+    try {
+        const adminUsers = [
+            { username: 'Paulo', email: 'paulo101@gmail.com', password: '123456', role: 'admin' },
+            { username: 'Augusto', email: 'augusto101@gmail.com', password: '123456', role: 'admin' },
+            { username: 'Nico', email: 'nico101@gmail.com', password: '123456', role: 'admin' },
+            { username: 'Santiago', email: 'santiago101@gmail.com', password: '123456', role: 'admin' },
+        ];
+
+        for (const adminUser of adminUsers) {
+            const existingUser = await User.findOne({ email: adminUser.email });
+            if (!existingUser) {
+                const passwordHash = await bcrypt.hash(adminUser.password, 10);
+                adminUser.password = passwordHash;
+                await User.create(adminUser);
+            } else {
+                existingUser.role = 'admin';
+                await existingUser.save();
+            }
+        }
+
+        res.status(201).json({ message: 'Usuarios administradores creados' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
