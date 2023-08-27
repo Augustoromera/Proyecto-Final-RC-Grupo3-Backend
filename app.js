@@ -1,24 +1,38 @@
-//importar librerias
-const express = require('express');
-const { dbConnection } = require('./database/config');
-const app= express();
-require('dotenv').config();
-const cors = require('cors');
+import express from 'express';import dotenv from 'dotenv';
+import cors from 'cors';
 
-//leactura y parceo del body
+// Rutas
+import adminRoutes from './routes/admin.js';
+dotenv.config();
+
+const app = express();
+
+// Leer y analizar el body
 app.use(express.json());
 
-//llamar cors
+// Habilitar CORS
 app.use(cors());
 
-//conexion a base de datos
-dbConnection();
+import mongoose from 'mongoose';
 
-//directorio publico
+const dbConnection = async () => {
+    try {
+        await mongoose.connect(process.env.DB_CNN);
+        console.log('Conectado a la base de datos');
+    } catch (error) {
+        console.log('Error de conexión a la base de datos:', error);
+    }
+};
+
+// Llamar la función
+dbConnection();
+// Directorio público
 app.use(express.static('public'));
 
-app.use('/admin', require('./routes/admin'));
-//inicializar server
+app.use('/admin', adminRoutes);
+
+// Inicializar el servidor
 app.listen(process.env.PORT, () => {
-    console.log(`servidor corriendo en el puerto ${process.env.PORT}`);
+    console.log(`Servidor corriendo en el puerto ${process.env.PORT}`);
 });
+export default app;

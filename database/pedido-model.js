@@ -1,6 +1,6 @@
-const { Schema, model } = require('mongoose');
-
-const pedidoSchema = Schema({
+import mongoose from 'mongoose';
+const Schema = mongoose.Schema
+const pedidoSchema = new Schema({
     usuario: {
         type: Schema.Types.ObjectId,
         ref: 'Usuario', 
@@ -11,7 +11,7 @@ const pedidoSchema = Schema({
         default: Date.now,
         required: true,
     },
-    menus:[ {
+    menus: [{
         type: Schema.Types.ObjectId,
         ref: 'Menu',
         required: true,
@@ -28,5 +28,6 @@ const pedidoSchema = Schema({
         required: true,
     },
 });
+export default mongoose.model('Pedido', pedidoSchema);
 
-module.exports = model('Pedido', pedidoSchema);
+

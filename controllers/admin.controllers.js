@@ -1,8 +1,8 @@
-const { validationResult } = require("express-validator");
-const menuModel = require("../database/menu-model");
-const usuarioModel = require("../database/usuario-model");
-const pedidoModel = require("../database/pedido-model");
-const bcrypt = require('bcrypt');
+import { validationResult } from 'express-validator';
+import menuModel from '../database/menu-model.js';
+import usuarioModel from '../database/usuario-model.js';
+import pedidoModel from '../database/pedido-model.js';
+import bcrypt from 'bcrypt';
 const cargarUsuarios = async (req, res) => {
     try {
         const usuarios = await usuarioModel.find();
@@ -85,7 +85,7 @@ const crearUsuario = async (req, res) => {
 };
 
 const cargarMenu = async (req, res) => {
-    
+
     try {
         const menus = await menuModel.find();
         res.status(200).json({
@@ -215,8 +215,7 @@ const eliminarUsuario = async (req, res) => {
     }
 };
 
-
-module.exports = {
+export {
     cargarUsuarios,
     crearMenu,
     cargarMenu,
@@ -228,4 +227,4 @@ module.exports = {
     listarPedido,
     completarPedido,
     eliminarUsuario
-}
+};

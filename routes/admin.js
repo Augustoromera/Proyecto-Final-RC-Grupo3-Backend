@@ -1,6 +1,6 @@
-const express = require('express');
-const { check } = require('express-validator');
-const {
+import express from 'express';
+import { check } from 'express-validator';
+import {
     cargarUsuarios,
     cargarMenu,
     crearMenu,
@@ -12,24 +12,24 @@ const {
     listarPedido,
     completarPedido,
     eliminarUsuario
-} = require('../controllers/admin.controllers');
+} from '../controllers/admin.controllers.js';
 
 const routerAdmin = express.Router();
-//control usuario
+
+// Control de usuarios
 routerAdmin.get('/listarUsuarios', cargarUsuarios);
 routerAdmin.post('/nuevoUsuario', [
-    check('name', 'El nombre es obligatorio, o debe ser alfabetico').not().isEmpty().isAlpha(),
-    check('estado', 'El estado es obligatorio').not().isEmpty(),
+    check('username', 'El nombre es obligatorio, o debe ser alfabético').not().isEmpty().isAlpha(),
+    check('status', 'El estado es obligatorio').not().isEmpty(),
     check('password', 'El password es obligatorio y debe tener al menos 8 caracteres').notEmpty().isLength({ min: 8 }),
-    check('rol', 'El rol es obligatoria').not().isEmpty(),
+    check('role', 'El rol es obligatorio').not().isEmpty(),
     check('email', 'El correo electrónico no es válido').isEmail(),
 ], crearUsuario);
 routerAdmin.put('/inactivarUsuario', inactivarUsuario);
 routerAdmin.put('/editarUsuario', editarUsuario);
 routerAdmin.delete('/eliminarUsuario/:id', eliminarUsuario);
 
-
-//control menu
+// Control de menú
 routerAdmin.get('/listarMenu', cargarMenu);
 routerAdmin.post('/nuevoMenu', [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
@@ -41,8 +41,8 @@ routerAdmin.post('/nuevoMenu', [
 routerAdmin.put('/editarMenu', editarMenu);
 routerAdmin.delete('/eliminarMenu/:id', eliminarMenu);
 
-//control pedidos
+// Control de pedidos
 routerAdmin.get('/listarPedido', listarPedido);
 routerAdmin.put('/completarPedido', completarPedido);
-module.exports = routerAdmin;
 
+export default routerAdmin;

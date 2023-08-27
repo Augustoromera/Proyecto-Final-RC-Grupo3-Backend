@@ -1,34 +1,35 @@
-const {Schema, model} = require ('mongoose');
-const formSchema = Schema({
-    name:{
-        type: 'string',
+import { Schema, model } from 'mongoose';
+
+const formSchema = new Schema({
+    name: {
+        type: String,
         required: true,
     },
 
-    lastname:{
-        type: 'string',
+    lastname: {
+        type: String,
         required: true,
     },
 
-    email:{
-        type: 'string',
+    email: {
+        type: String,
         required: true,
     },
 
-    phone:{
-        type: 'number',
+    phone: {
+        type: Number,
         required: false,
     },
 
-    subject:{
-        type: 'string',
+    subject: {
+        type: String,
         required: true,
     },
 
-    message:{
-        type: 'string',
+    message: {
+        type: String,
         required: true,
     }
 });
 
-module.exports = model('Form', formSchema);
+export default model('Form', formSchema);
