@@ -1,7 +1,7 @@
 import { validationResult } from 'express-validator';
-import menuModel from '../database/menu-model.js';
-import usuarioModel from '../database/usuario-model.js';
-import pedidoModel from '../database/pedido-model.js';
+import menuModel from '../models/menu-model.js';
+import usuarioModel from '../models/user.model.js';
+import pedidoModel from '../models/pedido-model.js';
 import bcrypt from 'bcrypt';
 const cargarUsuarios = async (req, res) => {
     try {
