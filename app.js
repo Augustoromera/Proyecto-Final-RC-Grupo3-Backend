@@ -3,6 +3,8 @@ import cors from 'cors';
 
 // Rutas
 import adminRoutes from './routes/admin.js';
+import pedidosRoutes from './routes/pedidos.js';
+import { dbConnection }   from './database/config.js';
 dotenv.config();
 
 const app = express();
@@ -13,16 +15,7 @@ app.use(express.json());
 // Habilitar CORS
 app.use(cors());
 
-import mongoose from 'mongoose';
 
-const dbConnection = async () => {
-    try {
-        await mongoose.connect(process.env.DB_CNN);
-        console.log('Conectado a la base de datos');
-    } catch (error) {
-        console.log('Error de conexión a la base de datos:', error);
-    }
-};
 
 // Llamar la función
 dbConnection();
@@ -30,6 +23,7 @@ dbConnection();
 app.use(express.static('public'));
 
 app.use('/admin', adminRoutes);
+app.use('/pedidos', pedidosRoutes);
 
 // Inicializar el servidor
 app.listen(process.env.PORT, () => {
