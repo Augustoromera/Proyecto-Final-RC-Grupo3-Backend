@@ -3,8 +3,9 @@ import { login, register, logout, profile, verifyToken } from '../controllers/au
 import { authRequired, isAdmin } from '../middlewares/validateToken.js';
 import { validateSchema } from '../middlewares/validator.middleware.js';
 import { registerSchema, loginSchema } from '../schemas/auth.schema.js';
-import { adminPageController } from '../controllers/admin.controllers.js';
 import { createAdminUsers } from '../controllers/auth.controller.js';
+import routerAdmin from './admin.js';
+import routerPedido from './pedidos.js';
 
 
 const router = Router();
@@ -17,8 +18,13 @@ router.get('/profile', authRequired, profile);
 
 
 //agrego pagina admin
-router.get('/admin-page', authRequired, isAdmin, adminPageController);
+router.get('/admin-page', authRequired, isAdmin, routerAdmin);
 router.post('/create-admin-users', createAdminUsers);
+
+
+//agrego pagina pedidos
+
+router.post('/pedidos', routerPedido);
 
 
 
