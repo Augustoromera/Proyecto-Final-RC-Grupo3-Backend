@@ -32,7 +32,7 @@ app.use('/pedidos', pedidosRoutes);
 connectDB();
 
 
-app.listen(8080);
-console.log('server en puerto', 8080);
+app.listen(6707);
+console.log('server en puerto', 6707);
 
 export default app;
