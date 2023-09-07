@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 const pedidoSchema = new Schema({
     usuario: {
         type: Schema.Types.ObjectId,
-        ref: 'Usuario', 
+        ref: 'User', 
         required: true,
     },
     fecha: {

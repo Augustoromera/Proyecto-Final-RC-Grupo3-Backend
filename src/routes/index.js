@@ -18,13 +18,13 @@ router.get('/profile', authRequired, profile);
 
 
 //agrego pagina admin
-router.get('/admin-page', authRequired, isAdmin, routerAdmin);
+router.use('/admin-page', authRequired, isAdmin, routerAdmin);
 router.post('/create-admin-users', createAdminUsers);
 
 
 //agrego pagina pedidos
 
-router.post('/pedidos', routerPedido);
+router.use('/pedidos', routerPedido);
 
 
 

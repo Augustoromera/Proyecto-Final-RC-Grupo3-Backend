@@ -3,6 +3,7 @@ import pedidoModel from "../models/pedido-model.js";
 export const crearPedido = async (req, res) => {
     try {
         const pedido = new pedidoModel(req.body);
+        console.log(req.body)
         await pedido.save();
         res.status(201).json({
             msg: 'Pedido creado correctamente',
