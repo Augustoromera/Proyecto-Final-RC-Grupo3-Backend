@@ -1,10 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
-import authRoutes from './src/routes/auth.routes.js';
+import router from './src/routes/index.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import adminRoutes from './src/routes/admin.js'
-import pedidosRoutes from './src/routes/pedidos.js'
 import { connectDB } from './src/models/db.js';
 import dotenv from 'dotenv';
 
@@ -24,14 +22,18 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/api", authRoutes);
-app.use('/admin', adminRoutes);
-app.use('/pedidos', pedidosRoutes);
+app.use("/api", router);
 
 // Conecta a la base de datos
 connectDB();
 
-
+//ENDPOINTS
+app.get('/', (req, res) => {
+  res.json({
+      success: true,
+      Response: "Server ON",
+  })
+});
 app.listen(8080);
 console.log('server en puerto', 8080);
 

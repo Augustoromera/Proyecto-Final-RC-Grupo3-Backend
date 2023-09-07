@@ -78,6 +78,7 @@ const crearUsuario = async (req, res) => {
             msg: 'Usuario creado correctamente',
         });
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             msg: 'Por favor contacta al administrador',
         });

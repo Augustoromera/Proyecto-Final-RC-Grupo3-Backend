@@ -8,7 +8,6 @@ import { TOKEN_SECRET } from '../config.js';
 
 export const register = async (req, res) => {
     const { email, password, username } = req.body;
-
     try {
         const userFound = await User.findOne({ email });
         if (userFound) return res.status(400).json({ message: ["El email ya está en uso"] });
@@ -57,10 +56,13 @@ export const login = async (req, res) => {
 
         const token = await createAccessToken({ id: userFound._id })
         res.cookie('token', token);
-        res.json({
+        console.log(token);
+        res.status(200).json({
             id: userFound._id,
             username: userFound.username,
             email: userFound.email,
+            status: userFound.status,
+            role: userFound.role,
             createdAt: userFound.createdAt,
             updateAt: userFound.updateAt,
         });
@@ -109,11 +111,15 @@ export const verifyToken = async (req, res) => {
         const userFound = await User.findById(user.id)
         if (!userFound) return res.status(401).json({ message: "No autorizado" });
 
-        return res.json({
+        res.status(200).json({
             id: userFound._id,
             username: userFound.username,
             email: userFound.email,
-        })
+            status: userFound.status,
+            role: userFound.role,
+            createdAt: userFound.createdAt,
+            updateAt: userFound.updateAt,
+        });
     });
 }
 
