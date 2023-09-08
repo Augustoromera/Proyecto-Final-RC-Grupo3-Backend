@@ -24,7 +24,7 @@ router.post('/create-admin-users', createAdminUsers);
 
 //agrego pagina pedidos
 
-router.use('/pedidos', routerPedido);
+router.use('/pedidos', authRequired, routerPedido);
 
 
 
