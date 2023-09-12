@@ -6,6 +6,7 @@ import { registerSchema, loginSchema } from '../schemas/auth.schema.js';
 import { createAdminUsers } from '../controllers/auth.controller.js';
 import routerAdmin from './admin.js';
 import routerPedido from './pedidos.js';
+import menuRouter from '../controllers/menurouter.js';
 
 
 const router = Router();
@@ -20,7 +21,8 @@ router.get('/profile', authRequired, profile);
 //agrego pagina admin
 router.use('/admin-page', authRequired, isAdmin, routerAdmin);
 router.post('/create-admin-users', createAdminUsers);
-
+//router para mostrar los productos en el home, sin necesitar credenciales
+router.use(menuRouter);
 
 //agrego pagina pedidos
 
