@@ -25,6 +25,11 @@ const menuSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    favorito: {
+        type: Boolean,
+        default: false,
+        required: false,
+    },
 });
 
 export default mongoose.model('Menu', menuSchema);
