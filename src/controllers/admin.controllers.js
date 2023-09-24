@@ -149,7 +149,6 @@ const editarMenu = async (req, res) => {
             msg: 'Menú editado correctamente',
         });
     } catch (error) {
-        console.log(error)
         res.status(500).json({
             msg: 'Por favor contacta al administrador',
         });
