@@ -26,6 +26,8 @@ export const register = async (req, res) => {
 
         const userSaved = await newUser.save();
 
+
+        //*BONUS
         // Enviar correo electrónico de bienvenida
         const transporter = nodemailer.createTransport({
             service: 'Gmail', // Cambia esto según tu proveedor de correo
@@ -46,17 +48,13 @@ Estimado ${username},
 
 Es un placer darte la bienvenida a Rapi Burguers, tu destino definitivo para disfrutar de las mejores hamburguesas gourmet en la ciudad. En nombre de todo nuestro equipo, queremos agradecerte por unirte a nuestra comunidad de amantes de la buena comida.
 
-En Rapi Burguers, nos esforzamos por ofrecer experiencias culinarias excepcionales que deleitarán tu paladar. Nuestro compromiso con la calidad, la frescura de los ingredientes y la creatividad en cada receta nos ha convertido en un lugar de referencia para los amantes de las hamburguesas en toda la región.
-
 Al registrarte en nuestro sitio web, has dado el primer paso para descubrir un mundo de sabores irresistibles. Como miembro de nuestra comunidad, disfrutarás de los siguientes beneficios:
 
 - Acceso exclusivo a nuestro menú completo de hamburguesas gourmet, con opciones que se adaptan a todos los gustos y preferencias.
 - Ofertas y promociones especiales reservadas solo para nuestros miembros registrados.
 - La conveniencia de realizar pedidos en línea y la opción de entrega rápida a tu puerta.
 - Actualizaciones regulares sobre nuestros eventos especiales y nuevas incorporaciones al menú.
-- La oportunidad de participar en encuestas y concursos para influir en nuestras futuras ofertas y ganar emocionantes premios.
-
-Tu cuenta en Rapi Burguers te permitirá explorar todo lo que tenemos para ofrecer y facilitará tus pedidos y seguimiento de tus actividades en nuestro sitio web.
+- La oportunidad de participar en encuestas, sorteos y concursos para influir en nuestras futuras ofertas y ganar emocionantes premios.
 
 Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para brindarte la mejor experiencia posible.
 
