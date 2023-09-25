@@ -42,27 +42,27 @@ export const register = async (req, res) => {
             to: email, // Dirección de correo electrónico del usuario registrado
             subject: 'Bienvenido a Rapi Burguers!',
             text: `\
-Asunto: Gracias por registrarte en Rapi Burguers - ¡Tu destino de hamburguesas gourmet esta aquí!
+    Asunto: Gracias por registrarte en Rapi Burguers - ¡Tu destino de hamburguesas gourmet esta aquí!
 
-Estimado ${username},
+    Estimado ${username},
+    
+    Es un placer darte la bienvenida, tu destino definitivo para disfrutar de las mejores hamburguesas gourmet en la ciudad. En nombre de todo nuestro equipo, queremos agradecerte por unirte a nuestra comunidad de amantes de la buena comida.
 
-Es un placer darte la bienvenida a Rapi Burguers, tu destino definitivo para disfrutar de las mejores hamburguesas gourmet en la ciudad. En nombre de todo nuestro equipo, queremos agradecerte por unirte a nuestra comunidad de amantes de la buena comida.
+    Al registrarte en nuestro sitio web, has dado el primer paso para descubrir un mundo de sabores irresistibles. Como miembro de nuestra comunidad, disfrutarás de los siguientes beneficios:
 
-Al registrarte en nuestro sitio web, has dado el primer paso para descubrir un mundo de sabores irresistibles. Como miembro de nuestra comunidad, disfrutarás de los siguientes beneficios:
+    - Acceso exclusivo a nuestro menú completo de hamburguesas gourmet, con opciones que se adaptan a todos los gustos y preferencias.
+    - Ofertas y promociones especiales reservadas solo para nuestros miembros registrados.
+    - La conveniencia de realizar pedidos en línea y la opción de entrega rápida a tu puerta.
+    - Actualizaciones regulares sobre nuestros eventos especiales y nuevas incorporaciones al menú.
+    - La oportunidad de participar en encuestas, sorteos y concursos para influir en nuestras futuras ofertas y ganar emocionantes premios.
 
-- Acceso exclusivo a nuestro menú completo de hamburguesas gourmet, con opciones que se adaptan a todos los gustos y preferencias.
-- Ofertas y promociones especiales reservadas solo para nuestros miembros registrados.
-- La conveniencia de realizar pedidos en línea y la opción de entrega rápida a tu puerta.
-- Actualizaciones regulares sobre nuestros eventos especiales y nuevas incorporaciones al menú.
-- La oportunidad de participar en encuestas, sorteos y concursos para influir en nuestras futuras ofertas y ganar emocionantes premios.
+    Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para brindarte la mejor experiencia posible.
 
-Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para brindarte la mejor experiencia posible.
+    Una vez más, te damos las gracias por unirte a Rapi Burguers. Esperamos que disfrutes de cada bocado y que encuentres en nosotros tu destino preferido para satisfacer tus antojos de hamburguesas gourmet.
 
-Una vez más, te damos las gracias por unirte a Rapi Burguers. Esperamos que disfrutes de cada bocado y que encuentres en nosotros tu destino preferido para satisfacer tus antojos de hamburguesas gourmet.
+    ¡Bienvenido a la familia Rapi Burguers!
 
-¡Bienvenido a la familia Rapi Burguers!
-
-Atentamente, Equipo de Rapi Burguers`,
+    Atentamente, Equipo de Rapi Burguers`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
