@@ -3,6 +3,8 @@ import { TOKEN_SECRET } from "../config.js"
 
 
 export function createAccessToken(payload) {
+  console.log("LA clave secreta es: ")
+  console.log(TOKEN_SECRET);
   return new Promise((resolve, reject) => {
     jwt.sign(
       payload,
