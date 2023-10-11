@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import { TOKEN_SECRET } from '../config.js';
 import nodemailer from 'nodemailer';
 
-
 export const register = async (req, res) => {
     const { email, password, username } = req.body;
     try {
@@ -14,7 +13,6 @@ export const register = async (req, res) => {
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        // Lista de correos electrónicos que tendrán el rol de administrador
         const adminEmails = ['paulo101@gmail.com', 'augusto101@gmail.com', 'nico101@gmail.com', 'santiago101@gmail.com'];
 
         const newUser = new User({
@@ -25,7 +23,7 @@ export const register = async (req, res) => {
         });
 
         const userSaved = await newUser.save();
-
+        //*BONUS
         // Enviar correo electrónico de bienvenida
         const transporter = nodemailer.createTransport({
             service: 'Gmail', // Cambia esto según tu proveedor de correo
@@ -40,31 +38,27 @@ export const register = async (req, res) => {
             to: email, // Dirección de correo electrónico del usuario registrado
             subject: 'Bienvenido a Rapi Burguers!',
             text: `\
-Asunto: Gracias por registrarte en Rapi Burguers - ¡Tu destino de hamburguesas gourmet esta aquí!
+    Asunto: Gracias por registrarte en Rapi Burguers - ¡Tu destino de hamburguesas gourmet esta aquí!
 
-Estimado ${username},
+    Estimado ${username},
+    
+    Es un placer darte la bienvenida, tu destino definitivo para disfrutar de las mejores hamburguesas gourmet en la ciudad. En nombre de todo nuestro equipo, queremos agradecerte por unirte a nuestra comunidad de amantes de la buena comida.
 
-Es un placer darte la bienvenida a Rapi Burguers, tu destino definitivo para disfrutar de las mejores hamburguesas gourmet en la ciudad. En nombre de todo nuestro equipo, queremos agradecerte por unirte a nuestra comunidad de amantes de la buena comida.
+    Al registrarte en nuestro sitio web, has dado el primer paso para descubrir un mundo de sabores irresistibles. Como miembro de nuestra comunidad, disfrutarás de los siguientes beneficios:
 
-En Rapi Burguers, nos esforzamos por ofrecer experiencias culinarias excepcionales que deleitarán tu paladar. Nuestro compromiso con la calidad, la frescura de los ingredientes y la creatividad en cada receta nos ha convertido en un lugar de referencia para los amantes de las hamburguesas en toda la región.
+    - Acceso exclusivo a nuestro menú completo de hamburguesas gourmet, con opciones que se adaptan a todos los gustos y preferencias.
+    - Ofertas y promociones especiales reservadas solo para nuestros miembros registrados.
+    - La conveniencia de realizar pedidos en línea y la opción de entrega rápida a tu puerta.
+    - Actualizaciones regulares sobre nuestros eventos especiales y nuevas incorporaciones al menú.
+    - La oportunidad de participar en encuestas, sorteos y concursos para influir en nuestras futuras ofertas y ganar emocionantes premios.
 
-Al registrarte en nuestro sitio web, has dado el primer paso para descubrir un mundo de sabores irresistibles. Como miembro de nuestra comunidad, disfrutarás de los siguientes beneficios:
+    Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para brindarte la mejor experiencia posible.
 
-- Acceso exclusivo a nuestro menú completo de hamburguesas gourmet, con opciones que se adaptan a todos los gustos y preferencias.
-- Ofertas y promociones especiales reservadas solo para nuestros miembros registrados.
-- La conveniencia de realizar pedidos en línea y la opción de entrega rápida a tu puerta.
-- Actualizaciones regulares sobre nuestros eventos especiales y nuevas incorporaciones al menú.
-- La oportunidad de participar en encuestas y concursos para influir en nuestras futuras ofertas y ganar emocionantes premios.
+    Una vez más, te damos las gracias por unirte a Rapi Burguers. Esperamos que disfrutes de cada bocado y que encuentres en nosotros tu destino preferido para satisfacer tus antojos de hamburguesas gourmet.
 
-Tu cuenta en Rapi Burguers te permitirá explorar todo lo que tenemos para ofrecer y facilitará tus pedidos y seguimiento de tus actividades en nuestro sitio web.
+    ¡Bienvenido a la familia Rapi Burguers!
 
-Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nuestro equipo de atención al cliente. Estamos aquí para brindarte la mejor experiencia posible.
-
-Una vez más, te damos las gracias por unirte a Rapi Burguers. Esperamos que disfrutes de cada bocado y que encuentres en nosotros tu destino preferido para satisfacer tus antojos de hamburguesas gourmet.
-
-¡Bienvenido a la familia Rapi Burguers!
-
-Atentamente, Equipo de Rapi Burguers`,
+    Atentamente, Equipo de Rapi Burguers`,
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -74,20 +68,19 @@ Atentamente, Equipo de Rapi Burguers`,
                 console.log('Correo electrónico de bienvenida enviado: ' + info.response);
             }
         });
-
         const token = await createAccessToken({ id: userSaved._id });
         res.cookie('token', token);
         res.json({
             id: userSaved._id,
             username: userSaved.username,
             email: userSaved.email,
+            token: token,
         });
 
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
-
 
 
 
@@ -107,6 +100,7 @@ export const login = async (req, res) => {
 
         const token = await createAccessToken({ id: userFound._id })
         res.cookie('token', token);
+        console.log("EL TOKEN AL INICIAR SESION QUE MANDAMOS AL CLIENTE ES:")
         console.log(token);
         res.status(200).json({
             id: userFound._id,
@@ -116,6 +110,7 @@ export const login = async (req, res) => {
             role: userFound.role,
             createdAt: userFound.createdAt,
             updateAt: userFound.updateAt,
+            token: token,
         });
 
     } catch (error) {
@@ -152,14 +147,13 @@ export const profile = async (req, res) => {
 }
 
 export const verifyToken = async (req, res) => {
-    const { token } = req.cookies
+    const token = req.headers.authorization.split(" ")[1];
 
+    console.log("lo que tenemos en token es", token);
     if (!token) return res.status(401).json({ message: "No autorizado" });
+    try {
+        const user = jwt.verify(token, TOKEN_SECRET); const userFound = await User.findById(user.id);
 
-    jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-        if (err) return res.status(401).json({ message: "No autorizado" });
-
-        const userFound = await User.findById(user.id)
         if (!userFound) return res.status(401).json({ message: "No autorizado" });
 
         res.status(200).json({
@@ -171,7 +165,10 @@ export const verifyToken = async (req, res) => {
             createdAt: userFound.createdAt,
             updateAt: userFound.updateAt,
         });
-    });
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({ message: "No autorizado" });
+    }
 }
 
 
