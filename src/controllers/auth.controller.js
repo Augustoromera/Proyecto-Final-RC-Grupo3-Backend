@@ -100,8 +100,6 @@ export const login = async (req, res) => {
 
         const token = await createAccessToken({ id: userFound._id })
         res.cookie('token', token);
-        console.log("EL TOKEN AL INICIAR SESION QUE MANDAMOS AL CLIENTE ES:")
-        console.log(token);
         res.status(200).json({
             id: userFound._id,
             username: userFound.username,
@@ -148,8 +146,6 @@ export const profile = async (req, res) => {
 
 export const verifyToken = async (req, res) => {
     const token = req.headers.authorization.split(" ")[1];
-
-    console.log("lo que tenemos en token es", token);
     if (!token) return res.status(401).json({ message: "No autorizado" });
     try {
         const user = jwt.verify(token, TOKEN_SECRET); const userFound = await User.findById(user.id);
