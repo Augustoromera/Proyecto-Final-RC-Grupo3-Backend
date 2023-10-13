@@ -1,5 +1,9 @@
 import jwt from 'jsonwebtoken';
-import { TOKEN_SECRET } from '../config.js';
+import dotenv from 'dotenv'; 
+
+dotenv.config(); 
+
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
 
 export const authRequired = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
@@ -12,10 +16,7 @@ export const authRequired = (req, res, next) => {
         req.user = user;
         next();
     })
-
 }
-
-
 
 export const isAdmin = (req, res, next) => {
     const userHeader = req.headers.user;
@@ -24,7 +25,7 @@ export const isAdmin = (req, res, next) => {
         try {
             const user = JSON.parse(userHeader);
             if (user.role === 'admin') {
-                next(); // Usuario es administrador, permite el acceso.
+                next();
             } else {
                 res.status(403).json({ message: 'Acceso denegado: se requieren permisos de administrador' });
             }

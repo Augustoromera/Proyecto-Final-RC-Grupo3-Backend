@@ -2,9 +2,10 @@ import User from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import { createAccessToken } from '../libs/jwt.js';
 import jwt from 'jsonwebtoken';
-import { TOKEN_SECRET } from '../config.js';
 import nodemailer from 'nodemailer';
-
+import dotenv from 'dotenv';
+dotenv.config(); 
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
 export const register = async (req, res) => {
     const { email, password, username } = req.body;
     try {
