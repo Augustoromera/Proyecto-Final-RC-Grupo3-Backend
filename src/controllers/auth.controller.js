@@ -98,7 +98,7 @@ export const login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, userFound.password)
 
         if (!isMatch) return res.status(400).json({ message: 'el email o la contraseña son incorrectos' });
-
+        if(userFound.status === 'inactive') return res.status(400).json({ message: 'El usuario se encuentra inactivo' });
         const token = await createAccessToken({ id: userFound._id })
         res.cookie('token', token);
         res.status(200).json({
@@ -152,7 +152,7 @@ export const verifyToken = async (req, res) => {
         const user = jwt.verify(token, TOKEN_SECRET); const userFound = await User.findById(user.id);
 
         if (!userFound) return res.status(401).json({ message: "No autorizado" });
-
+        if(userFound.status === 'inactive') return res.status(400).json({ message: 'El usuario se encuentra inactivo' });
         res.status(200).json({
             id: userFound._id,
             username: userFound.username,
