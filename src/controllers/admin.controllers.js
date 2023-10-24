@@ -6,7 +6,6 @@ import bcrypt from 'bcrypt';
 const cargarUsuarios = async (req, res) => {
     try {
         const usuarios = await usuarioModel.find();
-        //el fron necesita este arreglo de usuarios que conseguimos del modelo de la db
         res.status(200).json({
             ok: true,
             usuarios,

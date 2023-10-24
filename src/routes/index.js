@@ -18,16 +18,10 @@ router.get('/verify', verifyToken);
 router.get('/profile', authRequired, profile);
 
 
-//agrego pagina admin
 router.use('/admin-page', authRequired, isAdmin, routerAdmin);
 router.post('/create-admin-users', createAdminUsers);
-//router para mostrar los productos en el home, sin necesitar credenciales
 router.use(menuRouter);
 
-//agrego pagina pedidos
-
 router.use('/pedidos', authRequired, routerPedido);
-
-
 
 export default router;

@@ -24,10 +24,8 @@ app.use(cookieParser());
 
 app.use("/api", router);
 
-// Conecta a la base de datos
 connectDB();
 
-//ENDPOINTS
 app.get('/', (req, res) => {
   res.json({
       success: true,

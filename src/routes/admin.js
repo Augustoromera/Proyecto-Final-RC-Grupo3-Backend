@@ -16,14 +16,12 @@ import {
 
 const routerAdmin = express.Router();
 
-// Control de usuarios
 routerAdmin.get('/listarUsuarios', cargarUsuarios);
 routerAdmin.post('/nuevoUsuario', crearUsuario);
 routerAdmin.put('/inactivarUsuario', inactivarUsuario);
 routerAdmin.put('/editarUsuario', editarUsuario);
 routerAdmin.delete('/eliminarUsuario/:id', eliminarUsuario);
 
-// Control de menú
 routerAdmin.get('/listarMenu', cargarMenu);
 routerAdmin.post('/nuevoMenu', [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),
@@ -35,7 +33,6 @@ routerAdmin.post('/nuevoMenu', [
 routerAdmin.put('/editarMenu', editarMenu);
 routerAdmin.delete('/eliminarMenu/:id', eliminarMenu);
 
-// Control de pedidos
 routerAdmin.get('/listarPedido', listarPedido);
 routerAdmin.put('/completarPedido', completarPedido);
 
